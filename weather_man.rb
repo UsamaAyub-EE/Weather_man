@@ -4,6 +4,8 @@ require 'colorize'
 
 months = %w[not January February March April May June July August September October November December]
 short_months = months.map { |month| month[0, 3] }       #this array will store first three characters of month names
+
+#class to be added
 module CSV_to_list
   def CSV_to_list.csv_to_list(list_of_filenames)
     array = []
