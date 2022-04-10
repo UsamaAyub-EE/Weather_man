@@ -6,15 +6,17 @@ months = %w[not January February March April May June July August September Octo
 short_months = months.map { |month| month[0, 3] }       #this array will store first three characters of month names
 
 #class to be added
-module CSV_to_list
-  def CSV_to_list.csv_to_list(list_of_filenames)
-    array = []
-    for filename in list_of_filenames
-      CSV.foreach((filename), headers: true, col_sep: ",") do |row|          #code to read csv file and save data to array
-        array << row
+module CSV_file_handler
+  class CSV_to_List
+    def csv_to_list(list_of_filenames)
+      array = []
+      for filename in list_of_filenames
+        CSV.foreach((filename), headers: true, col_sep: ",") do |row|          #code to read csv file and save data to array
+          array << row
+        end
       end
+      array
     end
-    array
   end
 end
 #puts short_months
@@ -27,7 +29,7 @@ if ARGV[0] == '-e'
   filenames = filenames.select {|filename| filename.include?(ARGV[1]) }       #ARGV[1] is the year
   #puts filenames
 
-  array = CSV_to_list.csv_to_list(filenames)
+  array = CSV_file_handler::CSV_to_List.new.csv_to_list(filenames)
   array.shift        #remove the header information
   #puts array[0]
 
@@ -70,7 +72,7 @@ elsif ARGV[0] == '-a'
   # select the filename that contains the year and the short version of the month
   #puts filenames
 
-  array = CSV_to_list.csv_to_list(filenames)
+  array = CSV_file_handler::CSV_to_List.new.csv_to_list(filenames)
   array.shift        #remove the header information
 
   sum_high_avg = 0
@@ -106,7 +108,7 @@ elsif ARGV[0] == '-c'
   # select the filename that contains the year and the short version of the month
   #puts filenames
 
-  array = CSV_to_list.csv_to_list(filenames)
+  array = CSV_file_handler::CSV_to_List.new.csv_to_list(filenames)
   array.shift        #remove the header information
 
   puts "#{months[ year_month[1].to_i ]} #{year_month[0]}"
