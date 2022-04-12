@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 require 'matrix'
 require 'colorize'
@@ -76,6 +78,7 @@ module Report_gen
   def self.report_c_gen(data_array, date)
     data_array.each do |row|
       next unless row[0].start_with?(date)
+
       ymd = row[0].split('-')
       print "#{ymd[-1]} "
       $stdout.flush # this is needed to remove the newline printed by print
@@ -90,6 +93,7 @@ module Report_gen
       print "#{ymd[-1]} "
       $stdout.flush
       next unless row[3].to_i.to_s == row[3] # fourth column contains min temperature
+
       low_temp = row[3].to_i
       low_temp.times do
         print '+'.blue
